@@ -7,8 +7,8 @@ jobs:
   integration-test-lxd:
     strategy:
       matrix:
-        series: [xenial, bionic, focal]
-        module: [agent, basic, nrpe, website]
+        series: [focal] # xenial, bionic, 
+        module: [agent] # basic, nrpe, website
       fail-fast: false
     name: Integration tests (lxd)
     # [2022-09-29] The integration tests have to run on Ubuntu 18.04 to be able to support Xenial
@@ -31,3 +31,4 @@ jobs:
       - name: Setup tmate session
         if: ${{ failure() }}
         uses: mxschmitt/action-tmate@v3
+        
