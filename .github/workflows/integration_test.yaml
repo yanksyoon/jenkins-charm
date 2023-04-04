@@ -28,3 +28,6 @@ jobs:
       - name: Run integration tests
         run: |
           tox -e integration -- -k ${{ matrix.module }} --series ${{ matrix.series }}
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
