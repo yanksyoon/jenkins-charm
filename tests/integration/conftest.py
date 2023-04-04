@@ -1,15 +1,15 @@
 # Copyright 2022 Canonical Ltd.
 # See LICENSE file for licensing details.
 
-from pathlib import Path
 import typing
+from pathlib import Path
 
 import jenkins
-from ops.model import Application, ActiveStatus
 import pytest_asyncio
-from pytest import fixture, Config
-from pytest_operator.plugin import OpsTest
 import yaml
+from ops.model import ActiveStatus, Application
+from pytest import Config, fixture
+from pytest_operator.plugin import OpsTest
 
 from .types import JenkinsCredentials
 
@@ -43,7 +43,9 @@ async def app(ops_test: OpsTest, app_name: str, series: str):
     application = await ops_test.model.deploy(charm, application_name=app_name, series=series)
 
     # Jenkins takes a while to deploy, setting timeout to 30 minutes
-    await ops_test.model.wait_for_idle(timeout=30 * 60, status=ActiveStatus.name)
+    await ops_test.model.wait_for_idle(
+        timeout=30 * 60, status=ActiveStatus.name, raise_on_error=False
+    )
 
     yield application
 
