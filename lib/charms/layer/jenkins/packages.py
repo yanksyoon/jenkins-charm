@@ -29,6 +29,7 @@ APT_DEPENDENCIES = {
 }
 CONSTANT_APT_DEPENDENCIES = ["daemon"]
 APT_SOURCE = "deb http://pkg.jenkins.io/%s binary/"
+APT_SOURCE_LIST_PATH = "/etc/apt/sources.list"
 JENKINS_XENIAL_VERSION = "2.346.*"
 FIRST_JAVA_11_JENKINS_VERSION = "2.164.1"
 
@@ -205,8 +206,9 @@ class Packages(object):
             raise Exception(message)
 
         # Setup archive to use appropriate jenkins upstream
-        source = APT_SOURCE % dist
+
         keyfile = os.path.join(hookenv.charm_dir(), "jenkins.io.key")
+        source = APT_SOURCE % dist
         with open(keyfile, "r") as k:
             key = k.read()
         self._apt.add_source(source, key=key)
